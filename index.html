@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Assistant</title>
+    <style>
+        body {
+            background-color: gray;
+        }
+        main {
+            display: grid;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #video-container {
+            margin-top: 30px;
+            position: fixed;
+            top: 80%;
+            left: 80%;
+            opacity: 0.3;
+            pointer-events: none;
+            transition: all 1s ease-in-out;
+            transition-property: opacity, top, left;
+        }
+
+        #video-container.active {
+            opacity: 1;
+        }
+
+        #video-container img {
+            width: 100px;
+        }
+        #video-container p {
+            font-weight: bold;
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <button id="button1" class="button">Sign In</button>
+        <button id="button2" class="button">Home</button>
+        <button id="button3" class="button"> About</button>
+        <button id="button4" class="button">Contact Us</button>
+        <button id="button5" class="button">Explore</button>
+        <button id="button6" class="button">Sign Up</button>
+
+        <div id="video-container">
+            <img src="animated.gif" alt="">
+            <p id="explanation"></p>
+        </div>
+    </main>
+
+    <script>
+        const buttonExplanations = {
+            'button1': 'This is the Sign In button',
+            'button2': 'This is the HOME button',
+            'button3': 'This is the ABOUT button',
+            'button4': 'This is the CONTACT button',
+            'button5': 'This is the EXPLORE button',
+            'button6': 'This is the SIGN UP button'
+        };
+
+        const videoContainer = document.getElementById('video-container');
+        const explanationElm = document.getElementById('explanation');
+
+        // Add click event listeners to each button
+        document.getElementById('button1').addEventListener('click', () => pageAssistant('button1'));
+        document.getElementById('button2').addEventListener('click', () => pageAssistant('button2'));
+        document.getElementById('button3').addEventListener('click', () => pageAssistant('button3'));
+        document.getElementById('button4').addEventListener('click', () => pageAssistant('button4'));
+        document.getElementById('button5').addEventListener('click', () => pageAssistant('button5'));
+        document.getElementById('button6').addEventListener('click', () => pageAssistant('button6'));
+
+        function pageAssistant(buttonId) {
+            const explanation = buttonExplanations[buttonId];
+
+            const rect = document.getElementById(buttonId).getBoundingClientRect();
+
+            console.log(rect);
+       
+            const buttonPosition = {
+                top: rect.top,
+                left: rect.left,
+            };
+
+            // Move the video container close to the clicked button
+            videoContainer.style.top = `${buttonPosition.top}px`;
+            videoContainer.style.left = `${buttonPosition.left}px`;
+
+            // Show the video container by adding the "active" class
+            videoContainer.classList.add('active');
+
+            if (videoContainer.classList.contains('active')) {
+                explanationElm.textContent = explanation;
+            }
+        }
+    </script>
+</body>
+
+</html>
